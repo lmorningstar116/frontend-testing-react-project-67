@@ -56,7 +56,7 @@ describe('Loading File - Successful', () => {
       .get(canonicalPathReq)
       .reply(200, canonical);
 
-    await pageLoader(pageUrl, tmpDirPath);
+    await expect(pageLoader(pageUrl, tmpDirPath)).resolves.toEqual({ filepath: path.join(tmpDirPath, `${pageName}${ext}`) });
 
     const expectedPage = fs.readFileSync(getFixturePath('expected.html'), 'utf8');
     const actualPage = fs.readFileSync(path.join(tmpDirPath, `${pageName}${ext}`), 'utf8');
