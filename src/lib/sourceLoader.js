@@ -24,7 +24,12 @@ export const sourceLoader = (html, hostname, task) => {
     .then(data => data.filter(file => file))
     .then(data => data.map((file) => {
       sourcesDebug(`loaded file '${file.config.url}'`);
-      const ext = path.extname(file.config.url);
+      let ext = path.extname(file.config.url);
+
+      if (ext === '') {
+        ext = '.html';
+      }
+
       const pathSave = `${getFileName(file.config.url)}${ext}`;
       return { pathSave, data: file.data, url: file.config.url };
     }));

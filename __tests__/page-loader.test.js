@@ -25,6 +25,7 @@ const pngFile = fs.readFileSync(pngFilePath, 'utf8');
 
 const correctResultHtml = "<html><head>\n" +
   "<title>Test Page</title>\n" +
+  `<link href=\"localhost-test_files${path.sep}localhost-blog-about.html\" rel=\"canonical\">\n` +
   "</head>\n" +
   "<body>\n" +
   "<h1>Test</h1>\n" +
@@ -49,6 +50,8 @@ describe('page-loader', () => {
     nock('http://localhost')
       .get('/test')
       .reply(200, htmlFile)
+      .get('/blog/about')
+      .reply(200, '<html><head>About</head></html>')
       .get(`/test-page_files/${scriptFileName}`)
       .reply(200, scriptFile)
       .get(`/test-page_files/${icoFileName}`)
@@ -68,6 +71,8 @@ describe('page-loader', () => {
         expect(icoFileLoaded).toBeDefined();
         const pngFileLoaded = fs.readFileSync(path.resolve(dir, 'localhost-test_files', `localhost-test-page-files-${pngFileName}`));
         expect(pngFileLoaded).toBeDefined();
+        const dataPageAbout = fs.readFileSync(path.resolve(dir, 'localhost-test_files', 'localhost-blog-about.html'), 'utf8');
+        expect(dataPageAbout).toBe('<html><head>About</head></html>');
       })
       .catch(done.fail)
       .then(done);

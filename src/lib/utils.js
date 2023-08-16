@@ -28,13 +28,22 @@ export const getFileName = (address) => {
 }
 
 export const getCurrentLink = (host, link) => {
-  const uri = new URL(link);
-  const url = new URL(uri);
+  if (new RegExp(/^https?:\/\//).test(link)) {
+    const uri = new URL(link);
 
-  url.hostname = uri.hostname || new URL(host).hostname;
-  url.protocol = uri.protocol || new URL(host).protocol;
+    const url = new URL(uri);
 
-  return url.toString();
+    url.hostname = uri.hostname || new URL(host).hostname;
+    url.protocol = uri.protocol || new URL(host).protocol;
+
+    return url.toString();
+  } else {
+    const url = new URL(host);
+
+    url.pathname = link;
+
+    return url.toString();
+  }
 };
 
 export const getLinks = (html, hostname) => {
@@ -67,7 +76,12 @@ export const setLocalSource = (page, dir, host) => {
 
     links.each((idx) => {
       if ($(links[idx]).attr(value)) {
-        const ext = path.extname($(links[idx]).attr(value));
+        let ext = path.extname($(links[idx]).attr(value));
+
+        if (ext === '') {
+          ext = '.html';
+        }
+
         const currentLink = getCurrentLink(host, $(links[idx]).attr(value));
         const localHREF = path.join(dir, `${getFileName(currentLink)}${ext}`);
 
