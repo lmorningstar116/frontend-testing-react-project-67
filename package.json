@@ -5,13 +5,14 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "test": "cross-env DEBUG=page-loader npx jest --bail",
-    "test-nock": "cross-env DEBUG=nock.* npx jest --bail"
+    "test": "npx jest",
+    "test-nock": "cross-env DEBUG=nock.* npx jest"
   },
   "bin": {
     "page-loader": "src/bin/page_loader.js"
   },
   "jest": {
+    "verbose": true,
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/__fixtures__/"
@@ -28,7 +29,8 @@
     "cross-env": "^7.0.3",
     "debug": "^4.3.4",
     "listr": "^0.14.3",
-    "mz": "^2.7.0"
+    "mz": "^2.7.0",
+    "prettier": "^3.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.10",
