@@ -49,10 +49,8 @@ describe('page-loader', () => {
       const { filepath } = await loadPage('https://ru.hexlet.io/courses', tempPath);
       const resultHtml = await fs.readFile(filepath, 'utf-8');
 
-      console.log('expectedHtml', expectedHtml);
-      console.log('resultHtml', resultHtml);
-
       expect(resultHtml).toEqual(expectedHtml);
+      expect(resultHtml.localeCompare(expectedHtml) === 0).toBeTruthy();
 
       const assetsToCheck = [
         { in: 'nodejs.png', out: 'ru-hexlet-io-assets-professions-nodejs.png' },
