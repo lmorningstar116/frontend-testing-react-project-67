@@ -15,7 +15,8 @@ export default (address, dir = '.', task = undefined) => {
   let filesDir;
   let tempDir;
 
-  return Promise.resolve()
+  return Promise
+    .resolve()
     .then(() => getFileName(address))
     .then((filename) => {
       filePageName = filename;
@@ -70,10 +71,6 @@ export default (address, dir = '.', task = undefined) => {
     })
     .then(() => ({ filepath: path.resolve(dir, `${filePageName}.html`) }))
     .catch((err) => {
-      if (err.code === 'ENOENT') {
-        throw new Error('no such file or directory');
-      }
-
       throw new Error();
     });
 }

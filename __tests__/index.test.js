@@ -95,6 +95,6 @@ describe('Loading File - Negative', () => {
       .get(pagePath)
       .reply(200, 'data');
 
-    await expect(pageLoader(pageUrl, 'notExixstPath')).rejects.toThrow();
+    await expect(pageLoader(pageUrl, 'notExistPath')).rejects.toThrow();
   });
 });
