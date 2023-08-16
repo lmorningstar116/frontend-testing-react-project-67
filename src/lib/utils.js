@@ -47,6 +47,8 @@ export const getCurrentLink = (host, link) => {
 };
 
 export const getLinks = (html, hostname) => {
+  const hostNameURI = new URL(hostname);
+
   const $ = cheerio.load(html);
   const linkList = [];
 
@@ -59,7 +61,9 @@ export const getLinks = (html, hostname) => {
       .forEach((link) => {
         const currentLink = getCurrentLink(hostname, link.attribs[value]);
 
-        if (linkList.indexOf(currentLink) === -1) {
+        const currURI = new URL(currentLink);
+
+        if (currURI.hostname === hostNameURI.hostname && linkList.indexOf(currentLink) === -1) {
           linkList.push(currentLink);
         }
       });
@@ -69,6 +73,8 @@ export const getLinks = (html, hostname) => {
 };
 
 export const setLocalSource = (page, dir, host) => {
+  const hostNameURI = new URL(host);
+
   const $ = cheerio.load(page);
 
   for (const [key, value] of Object.entries(sources)) {
@@ -83,12 +89,16 @@ export const setLocalSource = (page, dir, host) => {
         }
 
         const currentLink = getCurrentLink(host, $(links[idx]).attr(value));
-        const localHREF = path.join(dir, `${getFileName(currentLink)}${ext}`);
+        const currURI = new URL(currentLink);
 
-        debugHref(currentLink);
-        debugHrefLocal(localHREF);
+        if (currURI.hostname === hostNameURI.hostname) {
+          const localHREF = path.join(dir, `${getFileName(currentLink)}${ext}`);
 
-        $(links[idx]).attr(value, localHREF);
+          debugHref(currentLink);
+          debugHrefLocal(localHREF);
+
+          $(links[idx]).attr(value, localHREF);
+        }
       }
     });
   }
