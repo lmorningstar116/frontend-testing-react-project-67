@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/lmorningstar116/frontend-testing-react-project-67/workflows/hexlet-check/badge.svg)](https://github.com/lmorningstar116/frontend-testing-react-project-67/actions)",
   "main": "src/index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "test": "DEBUG=nock.* jest",
-    "test-watch": "npm run test -- --watchAll",
-    "babel-node": "babel-node",
-    "eslint": "eslint",
-    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline"
+    "test": "DEBUG=page-loader npx jest --bail",
+    "test-nock": "DEBUG=nock.* npx jest --bail"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/__fixtures__/"
+    ]
   },
   "author": "lmorningstar",
   "license": "ISC",
