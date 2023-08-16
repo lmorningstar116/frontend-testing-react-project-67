@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/lmorningstar116/frontend-testing-react-project-67/workflows/hexlet-check/badge.svg)](https://github.com/lmorningstar116/frontend-testing-react-project-67/actions)",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
     "test": "DEBUG=nock.* jest",
