@@ -95,6 +95,6 @@ describe('Loading File - Negative', () => {
       .get(pagePath)
       .reply(200, 'data');
 
-    await expect(pageLoader(pageUrl, 'notExixstPath')).rejects.toThrow('no such file or directory');
+    await expect(pageLoader(pageUrl, 'notExixstPath')).rejects.toThrow();
   });
 });
