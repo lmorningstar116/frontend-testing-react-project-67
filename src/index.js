@@ -3,13 +3,12 @@ import fs from 'mz/fs.js';
 import path from 'path';
 import debug from 'debug';
 import os from 'os';
+import axiosDebugLogEnable from 'axios-debug-log/enable';
 
 import {getFileName, setLocalSource} from "./lib/utils.js";
 import {sourceLoader} from "./lib/sourceLoader.js";
 
 const log = debug('page-loader');
-
-require('axios-debug-log/enable');
 
 export default (address, dir = '.', task = undefined) => {
   let filePageName;
