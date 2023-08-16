@@ -68,5 +68,12 @@ export default (address, dir = '.', task = undefined) => {
           return Promise.all(promises);
         });
     })
-    .then(() => ({ filepath: path.resolve(dir, `${filePageName}.html`) }));
+    .then(() => ({ filepath: path.resolve(dir, `${filePageName}.html`) }))
+    .catch((err) => {
+      if (err.code === 'ENOENT') {
+        throw new Error('no such file or directory');
+      }
+
+      throw new Error();
+    });
 }
