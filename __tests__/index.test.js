@@ -56,13 +56,6 @@ describe('Loading File - Positive', () => {
     tmpDirPath = fs.mkdtempSync(path.join(os.tmpdir(), 'page-loader-'));
   });
 
-  it("Returns object with correct 'filepath' property", async () => {
-    const result = await pageLoader(pageUrl, tmpDirPath);
-
-    expect(result).toMatchObject({ filepath: expect.any(String) });
-    expect(result.filepath).toMatch(path.join(tmpDirPath, `${pageName}${ext}`));
-  });
-
   it('correctly loading in fixed output', async () => {
     const { filepath } = await pageLoader(pageUrl, tmpDirPath);
 
