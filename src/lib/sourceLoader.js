@@ -1,6 +1,6 @@
-const axios = require('axios');
-const path = require('path');
-const debug = require('debug');
+import path from 'path';
+import axios from "axios";
+import debug from 'debug';
 
 import {getFileName, getLinks} from "./utils.js";
 

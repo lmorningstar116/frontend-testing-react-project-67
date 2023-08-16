@@ -11,12 +11,6 @@
     "eslint": "eslint",
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline"
   },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/__fixtures__/"
-    ]
-  },
   "author": "lmorningstar",
   "license": "ISC",
   "dependencies": {

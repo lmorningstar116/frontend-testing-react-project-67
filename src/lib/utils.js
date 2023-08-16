@@ -1,6 +1,6 @@
-const cheerio = require('cheerio');
-const path = require('path');
-const debug = require('debug');
+import path from 'path';
+import debug from 'debug';
+import * as cheerio from 'cheerio';
 
 const debugHrefLocal = debug('page-loader:href-local');
 const debugHref = debug('page-loader:href');
