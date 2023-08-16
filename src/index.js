@@ -71,5 +71,5 @@ export default (address, dir = '.', task = undefined) => {
           return Promise.all(promises);
         });
     })
-    .then(() => path.resolve(tempDir, `${filePageName}.html`));
+    .then(() => ({ filepath: path.resolve(dir, `${filePageName}.html`) }));
 }
