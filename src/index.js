@@ -1,12 +1,13 @@
+import path from 'path';
+import os from 'os';
 import axios from 'axios';
 import fs from 'mz/fs.js';
-import path from 'path';
 import debug from 'debug';
-import os from 'os';
+/* eslint-disable-next-line */
 import axiosDebugLogEnable from 'axios-debug-log/enable.js';
 
-import {getFileName, setLocalSource} from "./lib/utils.js";
-import {sourceLoader} from "./lib/sourceLoader.js";
+import { getFileName, setLocalSource } from './lib/utils.js';
+import sourceLoader from './lib/sourceLoader.js';
 
 const log = debug('page-loader');
 
@@ -57,20 +58,20 @@ export default (address, dir = '.', task = undefined) => {
 
       return Promise.all([promiseFilesSave, promisePageSave])
         .then(() => fs.readFile(path.resolve(tempDir, `${filePageName}.html`)))
-        .then(data => fs.writeFile(path.resolve(dir, `${filePageName}.html`), data))
+        .then((data) => fs.writeFile(path.resolve(dir, `${filePageName}.html`), data))
         .then(() => fs.mkdir(path.resolve(dir, `${filePageName}_files`)))
         .then(() => fs.readdir(filesDir))
         .then((files) => {
           const promises = files.map((file) => {
             const name = path.basename(file);
             return fs.readFile(path.resolve(filesDir, file))
-              .then(data => fs.writeFile(path.resolve(dir, `${filePageName}_files`, name), data));
+              .then((data) => fs.writeFile(path.resolve(dir, `${filePageName}_files`, name), data));
           });
           return Promise.all(promises);
         });
     })
     .then(() => ({ filepath: path.resolve(dir, `${filePageName}.html`) }))
-    .catch((err) => {
+    .catch(() => {
       throw new Error();
     });
-}
+};

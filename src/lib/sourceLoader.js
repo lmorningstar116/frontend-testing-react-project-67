@@ -1,12 +1,12 @@
 import path from 'path';
-import axios from "axios";
+import axios from 'axios';
 import debug from 'debug';
 
-import {getFileName, getLinks} from "./utils.js";
+import { getFileName, getLinks } from './utils.js';
 
 const log = debug('page-loader');
 
-export const sourceLoader = (html, hostname, task) => {
+export default (html, hostname, task) => {
   const links = getLinks(html, hostname);
   const promises = links.map((link) => {
     if (task) {
@@ -20,8 +20,8 @@ export const sourceLoader = (html, hostname, task) => {
       });
   });
   return Promise.all(promises)
-    .then(data => data.filter(file => file))
-    .then(data => data.map((file) => {
+    .then((data) => data.filter((file) => file))
+    .then((data) => data.map((file) => {
       log(`loaded file '${file.config.url}'`);
       let ext = path.extname(file.config.url);
 

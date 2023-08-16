@@ -18,6 +18,9 @@
       "/__fixtures__/"
     ]
   },
+  "simple-git-hooks": {
+    "pre-commit": "npx eslint ."
+  },
   "author": "lmorningstar",
   "license": "ISC",
   "dependencies": {
@@ -29,8 +32,7 @@
     "cross-env": "^7.0.3",
     "debug": "^4.3.4",
     "listr": "^0.14.3",
-    "mz": "^2.7.0",
-    "prettier": "^3.0.2"
+    "mz": "^2.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.10",
@@ -40,6 +42,12 @@
     "babel-jest": "^29.6.2",
     "babel-preset-env": "^1.7.0",
     "jest": "^29.6.2",
-    "nock": "^13.3.2"
+    "nock": "^13.3.2",
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.8.3",
+    "prettier": "^2.7.1",
+    "simple-git-hooks": "^2.8.0"
   }
 }

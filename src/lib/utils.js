@@ -4,11 +4,11 @@ import * as cheerio from 'cheerio';
 
 const log = debug('page-loader');
 
-export const sources =  {
+export const sources = {
   link: 'href',
   script: 'src',
-  img: 'src'
-}
+  img: 'src',
+};
 
 export const getFileName = (address) => {
   try {
@@ -24,10 +24,10 @@ export const getFileName = (address) => {
   } catch {
     throw new Error('Incorrect address (must be like \'https://google.com\')');
   }
-}
+};
 
 export const getCurrentLink = (host, link) => {
-  if (new RegExp(/^https?:\/\//).test(link)) {
+  if (/^https?:\/\//.test(link)) {
     const uri = new URL(link);
 
     const url = new URL(uri);
@@ -36,13 +36,12 @@ export const getCurrentLink = (host, link) => {
     url.protocol = uri.protocol || new URL(host).protocol;
 
     return url.toString();
-  } else {
-    const url = new URL(host);
-
-    url.pathname = link;
-
-    return url.toString();
   }
+
+  const url = new URL(host);
+  url.pathname = link;
+
+  return url.toString();
 };
 
 export const getLinks = (html, hostname) => {
@@ -55,7 +54,7 @@ export const getLinks = (html, hostname) => {
     const links = $('html').find(key);
 
     links
-      .filter(tag => $(links[tag]).attr(value))
+      .filter((tag) => $(links[tag]).attr(value))
       .toArray()
       .forEach((link) => {
         const currentLink = getCurrentLink(hostname, link.attribs[value]);
