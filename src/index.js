@@ -45,7 +45,10 @@ export default (address, dir = '.', task = undefined) => {
         .then(() => sourceLoader(response.data, address, task))
         .then((files) => {
           const promises = files.map((file) => {
-            const filePath = path.resolve(filesDir, file.pathSave);
+            let ext = path.extname(file.pathSave);
+
+            const filePath = path.resolve(ext === '.html' ? dir : filesDir, file.pathSave);
+
             return fs.writeFile(filePath, file.data)
               .then(() => {
                 osDebug(`File saved '${file.pathSave}'`);

@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "test": "DEBUG=page-loader npx jest --bail",
+    "test": "DEBUG=page-loader:* npx jest --bail",
     "test-nock": "DEBUG=nock.* npx jest --bail"
   },
   "bin": {
