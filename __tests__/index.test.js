@@ -59,8 +59,13 @@ describe('Loading File - Positive', () => {
   it('correctly loading in fixed output', async () => {
     const { filepath } = await pageLoader(pageUrl, tmpDirPath);
 
+    console.log('filepath', filepath);
+
     const expectedPage = fs.readFileSync(getFixturePath('expected.html'), 'utf8');
     const actualPage = fs.readFileSync(filepath, 'utf8');
+
+    console.log('actualPage', actualPage);
+
     const downloadedImage = fs.readFileSync(path.join(tmpDirPath, `${filesDir}/${imgName}`), 'utf8');
     const downloadedScript = fs.readFileSync(path.join(tmpDirPath, `${filesDir}/${scriptName}`), 'utf8');
     const downloadedStyle = fs.readFileSync(path.join(tmpDirPath, `${filesDir}/${styleName}`), 'utf8');
