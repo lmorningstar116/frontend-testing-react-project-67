@@ -16,7 +16,7 @@ export default (address, dir = '.', task = undefined) => {
   let filesDir;
   let tempDir;
 
-  return Promise
+  return new Promise((resolve, reject) => Promise
     .resolve()
     .then(() => getFileName(address))
     .then((filename) => {
@@ -70,8 +70,6 @@ export default (address, dir = '.', task = undefined) => {
           return Promise.all(promises);
         });
     })
-    .then(() => ({ filepath: path.resolve(dir, `${filePageName}.html`) }))
-    .catch(() => {
-      throw new Error();
-    });
+    .then(() => resolve({ filepath: path.resolve(dir, `${filePageName}.html`) }))
+    .catch((err) => reject(err.code)));
 };

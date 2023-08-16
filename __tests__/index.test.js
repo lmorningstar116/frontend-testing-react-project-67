@@ -39,7 +39,7 @@ const script = fs.readFileSync(getFixturePath(`${filesDir}/${scriptName}`), 'utf
 const style = fs.readFileSync(getFixturePath(`${filesDir}/${styleName}`), 'utf8');
 const canonical = fs.readFileSync(getFixturePath(`${filesDir}/${canonicalName}`), 'utf8');
 
-describe('pageLoader', () => {
+describe('Loading File - Positive', () => {
   beforeEach(async () => {
     nock(baseUrl)
       .get(pagePath)
@@ -56,18 +56,18 @@ describe('pageLoader', () => {
     tmpDirPath = fs.mkdtempSync(path.join(os.tmpdir(), 'page-loader-'));
   });
 
-  test("Returns object with correct 'filepath' property", async () => {
+  it("Returns object with correct 'filepath' property", async () => {
     const result = await pageLoader(pageUrl, tmpDirPath);
 
     expect(result).toMatchObject({ filepath: expect.any(String) });
     expect(result.filepath).toMatch(path.join(tmpDirPath, `${pageName}${ext}`));
   });
 
-  test('correctly loading in fixed output', async () => {
-    await pageLoader(pageUrl, tmpDirPath);
+  it('correctly loading in fixed output', async () => {
+    const { filepath } = await pageLoader(pageUrl, tmpDirPath);
 
     const expectedPage = fs.readFileSync(getFixturePath('expected.html'), 'utf8');
-    const actualPage = fs.readFileSync(path.join(tmpDirPath, `${pageName}${ext}`), 'utf8');
+    const actualPage = fs.readFileSync(filepath, 'utf8');
     const downloadedImage = fs.readFileSync(path.join(tmpDirPath, `${filesDir}/${imgName}`), 'utf8');
     const downloadedScript = fs.readFileSync(path.join(tmpDirPath, `${filesDir}/${scriptName}`), 'utf8');
     const downloadedStyle = fs.readFileSync(path.join(tmpDirPath, `${filesDir}/${styleName}`), 'utf8');
@@ -82,25 +82,25 @@ describe('pageLoader', () => {
 });
 
 describe('Loading File - Negative', () => {
-  test('bad request', async () => {
+  it('bad request', async () => {
     nock('http://my.url')
       .get('/not-exist-page')
       .reply(404, '');
-    await expect(pageLoader('http://my.url/not-exist-page', tmpDirPath)).rejects.toThrow();
+    await expect(pageLoader('http://my.url/not-exist-page', tmpDirPath)).rejects.toEqual('ERR_BAD_REQUEST');
   });
 
-  test('bad url', async () => {
+  it('bad url', async () => {
     nock('http:/my.url')
       .get(pagePath)
       .reply(404, '');
-    await expect(pageLoader('http:/my.url/not-exist-page', tmpDirPath)).rejects.toThrow();
+    await expect(pageLoader('http:/my.url/not-exist-page', tmpDirPath)).rejects.toEqual('ENETUNREACH');
   });
 
-  test('output path not exist', async () => {
+  it('output path not exist', async () => {
     nock(baseUrl)
       .get(pagePath)
       .reply(200, 'data');
 
-    await expect(pageLoader(pageUrl, 'notExistPath')).rejects.toThrow();
+    await expect(pageLoader(pageUrl, 'notExistPath')).rejects.toEqual('ENOENT');
   });
 });
