@@ -1,7 +1,12 @@
-import { Command } from 'commander';
-import chalk from 'chalk';
-import Listr from 'listr';
-import debug from 'debug';
+// import { Command } from 'commander';
+// import chalk from 'chalk';
+// import Listr from 'listr';
+// import debug from 'debug';
+
+const { Command } = require('commander');
+const chalk = require('chalk');
+const Listr = require('listr');
+const debug = require('debug');
 
 import loader from '../index.js';
 

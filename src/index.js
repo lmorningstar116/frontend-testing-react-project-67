@@ -1,8 +1,8 @@
-import axios from 'axios';
-import fs from 'mz/fs.js';
-import path from 'path';
-import debug from 'debug';
-import os from 'os';
+const axios = require('axios');
+const fs = require('mz/fs');
+const path = require('path');
+const debug = require('debug');
+const os = require('os');
 
 import {getFileName, setLocalSource} from "./lib/utils.js";
 import {sourceLoader} from "./lib/sourceLoader.js";
