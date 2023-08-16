@@ -48,6 +48,10 @@ describe('page-loader', () => {
     it('should download page with resources', async () => {
       const { filepath } = await loadPage('https://ru.hexlet.io/courses', tempPath);
       const resultHtml = await fs.readFile(filepath, 'utf-8');
+
+      console.log('expectedHtml', expectedHtml);
+      console.log('resultHtml', resultHtml);
+
       expect(resultHtml).toEqual(expectedHtml);
 
       const assetsToCheck = [
