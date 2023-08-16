@@ -3,7 +3,7 @@ import fs from 'mz/fs.js';
 import path from 'path';
 import debug from 'debug';
 import os from 'os';
-import axiosDebugLogEnable from 'axios-debug-log/enable';
+import axiosDebugLogEnable from 'axios-debug-log/enable.js';
 
 import {getFileName, setLocalSource} from "./lib/utils.js";
 import {sourceLoader} from "./lib/sourceLoader.js";
