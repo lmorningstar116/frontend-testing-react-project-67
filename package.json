@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "test": "DEBUG=page-loader:* npx jest --bail",
-    "test-nock": "DEBUG=nock.* npx jest --bail"
+    "test": "cross-env DEBUG=page-loader npx jest --bail",
+    "test-nock": "cross-env DEBUG=nock.* npx jest --bail"
   },
   "bin": {
     "page-loader": "src/bin/page_loader.js"
@@ -25,6 +25,7 @@
     "chalk": "^5.3.0",
     "cheerio": "^1.0.0-rc.12",
     "commander": "^11.0.0",
+    "cross-env": "^7.0.3",
     "debug": "^4.3.4",
     "listr": "^0.14.3",
     "mz": "^2.7.0"

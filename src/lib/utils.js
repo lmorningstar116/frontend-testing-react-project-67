@@ -2,8 +2,7 @@ import path from 'path';
 import debug from 'debug';
 import * as cheerio from 'cheerio';
 
-const debugHrefLocal = debug('page-loader:href-local');
-const debugHref = debug('page-loader:href');
+const log = debug('page-loader');
 
 export const sources =  {
   link: 'href',
@@ -94,8 +93,8 @@ export const setLocalSource = (page, dir, host) => {
         if (currURI.hostname === hostNameURI.hostname) {
           const localHREF = path.join(dir, `${getFileName(currentLink)}${ext}`);
 
-          debugHref(currentLink);
-          debugHrefLocal(localHREF);
+          log(currentLink);
+          log(localHREF);
 
           $(links[idx]).attr(value, localHREF);
         }

@@ -7,10 +7,7 @@ import os from 'os';
 import {getFileName, setLocalSource} from "./lib/utils.js";
 import {sourceLoader} from "./lib/sourceLoader.js";
 
-const httpDebug = debug('page-loader:http');
-const osDebug = debug('page-loader:os');
-const pathDebug = debug('page-loader:path');
-const loaderDebug = debug('page-loader:loader');
+const log = debug('page-loader');
 
 require('axios-debug-log/enable');
 
@@ -32,16 +29,16 @@ export default (address, dir = '.', task = undefined) => {
     })
     .then(() => axios.get(address))
     .then((response) => {
-      loaderDebug(`address: '${address}'`);
-      loaderDebug(`output: '${dir}'`);
-      httpDebug('Page have been loaded.');
+      log(`address: '${address}'`);
+      log(`output: '${dir}'`);
+      log('Page have been loaded.');
 
       const page = setLocalSource(response.data, `${filePageName}_files`, address);
-      loaderDebug('Links have been replaced to local files.');
+      log('Links have been replaced to local files.');
       const promisePageSave = fs.writeFile(path.resolve(tempDir, `${filePageName}.html`), page)
-        .then(() => osDebug('Page have been saved.'));
+        .then(() => log('Page have been saved.'));
       const promiseFilesSave = fs.mkdir(filesDir)
-        .then(() => osDebug(`Dir '${filesDir}' created.`))
+        .then(() => log(`Dir '${filesDir}' created.`))
         .then(() => sourceLoader(response.data, address, task))
         .then((files) => {
           const promises = files.map((file) => {
@@ -51,14 +48,14 @@ export default (address, dir = '.', task = undefined) => {
 
             return fs.writeFile(filePath, file.data)
               .then(() => {
-                osDebug(`File saved '${file.pathSave}'`);
-                pathDebug(`path: '${filePath}'`);
+                log(`File saved '${file.pathSave}'`);
+                log(`path: '${filePath}'`);
                 return file.url;
               });
           });
           return Promise.all(promises);
         })
-        .then(() => loaderDebug('Resources have been saved.'));
+        .then(() => log('Resources have been saved.'));
 
       return Promise.all([promiseFilesSave, promisePageSave])
         .then(() => fs.readFile(path.resolve(tempDir, `${filePageName}.html`)))
@@ -74,5 +71,5 @@ export default (address, dir = '.', task = undefined) => {
           return Promise.all(promises);
         });
     })
-    .then(() => loaderDebug('Resources have been saved.'));
+    .then(() => path.resolve(tempDir, `${filePageName}.html`));
 }

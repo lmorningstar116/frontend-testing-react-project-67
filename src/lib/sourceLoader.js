@@ -4,8 +4,7 @@ import debug from 'debug';
 
 import {getFileName, getLinks} from "./utils.js";
 
-const sourcesDebug = debug('page-loader:src');
-const sourceFailLoad = debug('page-loader:src_fail_load');
+const log = debug('page-loader');
 
 export const sourceLoader = (html, hostname, task) => {
   const links = getLinks(html, hostname);
@@ -16,14 +15,14 @@ export const sourceLoader = (html, hostname, task) => {
 
     return axios.get(link, { responseType: 'arraybuffer' })
       .catch((err) => {
-        sourceFailLoad(err);
+        log(err);
         return err;
       });
   });
   return Promise.all(promises)
     .then(data => data.filter(file => file))
     .then(data => data.map((file) => {
-      sourcesDebug(`loaded file '${file.config.url}'`);
+      log(`loaded file '${file.config.url}'`);
       let ext = path.extname(file.config.url);
 
       if (ext === '') {
