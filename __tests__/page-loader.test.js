@@ -71,7 +71,7 @@ describe('page-loader', () => {
         expect(icoFileLoaded).toBeDefined();
         const pngFileLoaded = fs.readFileSync(path.resolve(dir, 'localhost-test_files', `localhost-test-page-files-${pngFileName}`));
         expect(pngFileLoaded).toBeDefined();
-        const dataPageAbout = fs.readFileSync(path.resolve(dir, 'localhost-blog-about.html'), 'utf8');
+        const dataPageAbout = fs.readFileSync(path.resolve(dir, 'localhost-test_files', 'localhost-blog-about.html'), 'utf8');
         expect(dataPageAbout).toBe('<html><head>About</head></html>');
       })
       .catch(done.fail)
