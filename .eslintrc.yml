@@ -10,7 +10,6 @@ parserOptions:
   ecmaVersion: latest
 
 rules:
-  no-restricted-syntax: off
   no-promise-executor-return: off
   no-shadow : off
   no-console: 0

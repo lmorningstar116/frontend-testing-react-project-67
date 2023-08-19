@@ -50,6 +50,7 @@ export const getLinks = (html, hostname) => {
   const $ = cheerio.load(html);
   const linkList = [];
 
+  /* eslint-disable-next-line */
   for (const [key, value] of Object.entries(sources)) {
     const links = $('html').find(key);
 
@@ -75,6 +76,7 @@ export const setLocalSource = (page, dir, host) => {
 
   const $ = cheerio.load(page);
 
+  /* eslint-disable-next-line */
   for (const [key, value] of Object.entries(sources)) {
     const links = $('html').find(key);
 
