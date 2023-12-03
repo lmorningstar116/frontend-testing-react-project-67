@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/lmorningstar116/frontend-testing-react-project-67/workflows/hexlet-check/badge.svg)](https://github.com/lmorningstar116/frontend-testing-react-project-67/actions)",
+  "description": "Загрузчик страниц (тестирование)",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "test-nock": "cross-env DEBUG=nock.* npx jest"
   },
   "bin": {
-    "page-loader": "src/bin/page_loader.js"
+    "page-loader": "src/page_loader.js"
   },
   "jest": {
     "verbose": true,

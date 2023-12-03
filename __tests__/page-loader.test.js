@@ -89,12 +89,11 @@ describe('page-loader', () => {
       await expect(loadPage('https://ru.hexlet.io/courses', 'notExistPath')).rejects.toEqual('ERR_INVALID_ARG_TYPE');
     });
 
-    test.each([
-      401,
-      403,
-      404,
-      500,
-    ])('should handle %d errors', async (errorCode) => {
+    it.each(
+      Object
+        .keys(errCodes)
+        .map((code) => Number(code)),
+    )('should handle %d errors', async (errorCode) => {
       nock('https://ru.hexlet.io')
         .get('/pagewitherror')
         .reply(errorCode);
