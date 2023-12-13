@@ -9,7 +9,7 @@
     "test-nock": "cross-env DEBUG=nock.* npx jest"
   },
   "bin": {
-    "page-loader": "src/page_loader.js"
+    "page-loader": "bin/page_loader.js"
   },
   "jest": {
     "verbose": true,

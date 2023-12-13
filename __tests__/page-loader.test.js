@@ -11,6 +11,39 @@ let tempPath;
 let expectedHtml;
 
 describe('page-loader', () => {
+  const resources = [
+    {
+      path: '/courses',
+      fixture: 'hexlet-courses.html',
+      contentType: 'text/html; charset=UTF-8',
+      out: 'ru-hexlet-io-courses.html',
+    },
+    {
+      path: '/assets/professions/nodejs.png',
+      fixture: 'nodejs.png',
+      contentType: 'image/png',
+      out: 'ru-hexlet-io-assets-professions-nodejs.png',
+    },
+    {
+      path: '/assets/testing/pyramid.jpeg',
+      fixture: 'pyramid.jpeg',
+      contentType: 'image/jpeg',
+      out: 'ru-hexlet-io-assets-testing-pyramid.jpeg',
+    },
+    {
+      path: '/assets/application.css',
+      fixture: 'application.css',
+      contentType: 'text/css',
+      out: 'ru-hexlet-io-assets-application.css',
+    },
+    {
+      path: '/packs/js/runtime.js',
+      fixture: 'runtime.js',
+      contentType: 'text/javascript',
+      out: 'ru-hexlet-io-packs-js-runtime.js',
+    },
+  ];
+
   beforeAll(() => {
     nock.disableNetConnect();
   });
@@ -26,14 +59,6 @@ describe('page-loader', () => {
   describe('positive cases', () => {
     beforeEach(async () => {
       expectedHtml = await fs.readFile(getFixturePath('/expected/hexlet-courses-result.html'), 'utf-8');
-
-      const resources = [
-        { path: '/courses', fixture: 'hexlet-courses.html', contentType: 'text/html; charset=UTF-8' },
-        { path: '/assets/professions/nodejs.png', fixture: 'nodejs.png', contentType: 'image/png' },
-        { path: '/assets/testing/pyramid.jpeg', fixture: 'pyramid.jpeg', contentType: 'image/jpeg' },
-        { path: '/assets/application.css', fixture: 'application.css', contentType: 'text/css' },
-        { path: '/packs/js/runtime.js', fixture: 'runtime.js', contentType: 'text/javascript' },
-      ];
 
       resources.forEach((resource) => {
         nock('https://ru.hexlet.io')
@@ -52,16 +77,8 @@ describe('page-loader', () => {
       expect(resultHtml).toEqual(expectedHtml);
       expect(resultHtml.localeCompare(expectedHtml) === 0).toBeTruthy();
 
-      const assetsToCheck = [
-        { in: 'nodejs.png', out: 'ru-hexlet-io-assets-professions-nodejs.png' },
-        { in: 'pyramid.jpeg', out: 'ru-hexlet-io-assets-testing-pyramid.jpeg' },
-        { in: 'application.css', out: 'ru-hexlet-io-assets-application.css' },
-        { in: 'runtime.js', out: 'ru-hexlet-io-packs-js-runtime.js' },
-        { in: 'hexlet-courses.html', out: 'ru-hexlet-io-courses.html' },
-      ];
-
-      await Promise.all(assetsToCheck.map(async (asset) => {
-        const expectedFile = await fs.readFile(getFixturePath(asset.in));
+      await Promise.all(resources.map(async (asset) => {
+        const expectedFile = await fs.readFile(getFixturePath(asset.fixture));
         const resultFile = await fs.readFile(path.join(tempPath, 'ru-hexlet-io-courses_files', asset.out));
 
         expect(expectedFile.equals(resultFile)).toBeTruthy();
@@ -87,6 +104,14 @@ describe('page-loader', () => {
 
     it('should handle filesystem errors', async () => {
       await expect(loadPage('https://ru.hexlet.io/courses', 'notExistPath')).rejects.toEqual('ERR_INVALID_ARG_TYPE');
+    });
+
+    it('should handle filesystem error (file instead directory)', async () => {
+      const file = `${tempPath}/test-file.txt`;
+
+      await fs.writeFile(file, 'test');
+
+      await expect(loadPage('https://ru.hexlet.io/courses', file)).rejects.toEqual('ERR_INVALID_ARG_TYPE');
     });
 
     it.each(

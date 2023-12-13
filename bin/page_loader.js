@@ -1,6 +1,6 @@
 import { program } from 'commander';
 
-import pageLoader from './index.js';
+import pageLoader from '../src/index.js';
 
 program
   .name('page-loader')
